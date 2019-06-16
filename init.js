@@ -22,7 +22,7 @@ class Modal {
             `<div class="${headerClasses}">` +
                 `<span class="${titleClasses}">${args.title}</span>` +
                 `<span class="${closeButtonContainerClasses}">` +
-                    `<button class="${closeButtonClasses}">X</button>`+ 
+                    `<button class="${closeButtonClasses}" style="padding:0.1rem;"> X </button>`+ 
                 '</span>' +
             '</div>' +
             `<div class="${contentClasses}">${args.content}</div>`;
