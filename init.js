@@ -27,21 +27,33 @@ class Modal {
             '</div>' +
             `<div class="${contentClasses}">${args.content}</div>`;
         document.body.appendChild(this.modal);
-        if(args.onOpenCallback != null){
-            args.onOpenCallback();
-        }
 
         // Set event listeners
         var closeButton = this.modal.getElementsByClassName(closingClass)[0];
-        closeButton.addEventListener('click', (e) => {
+        window.addEventListener('keyup', (e) => {
+            // Bind ESC
+            if(e.keyCode == 27){
                 this.hide();
-                if(args.onCloseCallback != null){
-                    args.onCloseCallback();
-                }
+            }
         });
+        closeButton.addEventListener('click', (e) => {
+            this.hide();
+        });
+
+        // Open/Close callbacks
+        if (args.onCloseCallback != null && typeof args.onCloseCallback === "function"){
+            this.onCloseCallback = args.onCloseCallback;
+        }
+        if (args.onOpenCallback != null && typeof args.onOpenCallback === "function"){
+            this.openCallback = args.onOpenCallback;
+            this.openCallback();
+        }
     }
     hide(){
         var parent = this.modal.parentNode;
+        if (this.onCloseCallback != null){
+            this.onCloseCallback();
+        }
         parent.removeChild(this.modal);
     }
 
