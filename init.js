@@ -54,7 +54,7 @@ class Modal {
         if (this.onCloseCallback != null){
             this.onCloseCallback();
         }
-        parent.removeChild(this.modal);
+        parent.removeChild(this.modal); // TODO: do not remove - make it reusable (let client decide)
     }
 
     joinStyleClasses(classArray){
@@ -66,3 +66,31 @@ class Modal {
         }
     }
 }
+
+// Utilities
+var isMenuShown = false;
+function toggleMenu() {
+    let expandedClass = 'expanded';
+    let menuItems = document.getElementsByClassName('menu-item');
+    let menuToggle = document.getElementsByClassName('menu-toggle');
+    if (isMenuShown) {
+        menuToggle[0].classList.remove(expandedClass);
+        for (var index = 0; index < menuItems.length; index++) {
+            menuItems[index].classList.remove(expandedClass);
+        }
+    }
+    else {
+        menuToggle[0].classList.add(expandedClass);
+        for (var index = 0; index < menuItems.length; index++) {
+            menuItems[index].classList.add(expandedClass);
+        }
+    }
+    isMenuShown = !isMenuShown;
+}
+
+window.onload = function(){
+    let menuItems = document.getElementsByClassName('menu-item');
+    for (var index = 0; index < menuItems.length; index++) {
+        menuItems[index].addEventListener('click', toggleMenu);
+    }
+};
